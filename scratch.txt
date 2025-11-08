@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- <header>
+  <header>
     <h1>Hello! This page is under construction...</h1>
     <nav>
       <button class="nav-btn">About</button>
       <button class="nav-btn">Research</button>
       <button class="nav-btn">Contact</button>
     </nav>
-  </header> -->
+  </header>
 
   <main id="canvas-container"></main>
     <canvas id="interactive-canvas"></canvas>

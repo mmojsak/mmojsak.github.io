@@ -1,0 +1,88 @@
+/* === Global styles === */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #ffffff;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  cursor: none;
+}
+
+/* === Header === */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(20, 20, 20, 0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+h1 {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-btn {
+  background: none;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: #0f0;
+  color: #0f0;
+}
+
+/* === Canvas and coordinate display === */
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#coord-label {
+  position: absolute;
+  font-family: monospace;
+  color: rgb(0, 0, 0);
+  font-size: 0.9rem;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none; /* ensures it doesn’t block the cursor */
+  transform: translate(10px, -20px); /* offset from crosshair */
+}
+
+main#canvas-container {
+  position: relative; /* anchor for absolute children */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#interactive-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-color: #ffffff;
+  cursor: none;
+}
