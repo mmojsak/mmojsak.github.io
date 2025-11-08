@@ -135,3 +135,15 @@ canvas.addEventListener("mousemove", (e) => {
   coordLabel.style.left = `${x + 12}px`;
   coordLabel.style.top  = `${y - 18}px`;
 });
+
+// Handle touch input
+canvas.addEventListener("touchstart", handleTouch, { passive: true });
+canvas.addEventListener("touchmove", handleTouch, { passive: true });
+
+function handleTouch(e) {
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+  drawCrosshair(x, y);
+}
