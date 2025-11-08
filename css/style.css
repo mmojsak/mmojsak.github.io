@@ -30,24 +30,11 @@ h1 {
   letter-spacing: 1px;
 }
 
-nav {
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-btn {
-  background: none;
-  border: 1px solid #555;
-  color: #ccc;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.nav-btn:hover {
-  border-color: #0f0;
-  color: #0f0;
+#canvas-container {
+  position: relative; /* anchor for absolute children */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* === Canvas and coordinate display === */
@@ -60,6 +47,24 @@ canvas {
   left: 0;
 }
 
+#background-canvas {
+  z-index: 1; /* background grid + name */
+}
+
+#interactive-canvas {
+  z-index: 3; /* crosshair on top */
+  cursor: none;
+}
+
+/* #interactive-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-color: #ffffff;
+  cursor: none;
+} */
+
+
 #coord-label {
   position: absolute;
   font-family: monospace;
@@ -69,20 +74,33 @@ canvas {
   padding: 0px 0px;
   border-radius: 0px;
   pointer-events: none; /* ensures it doesn’t block the cursor */
-  transform: translate(10px, -20px); /* offset from crosshair */
+  transform: translate(10px, 10px); /* offset from crosshair */
 }
 
-main#canvas-container {
-  position: relative; /* anchor for absolute children */
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
 
-#interactive-canvas {
+
+/* HTML overlay links */
+#link-container {
   position: absolute;
-  inset: 0;
-  display: block;
-  background-color: #ffffff;
-  cursor: none;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  z-index: 5; /* above canvases */
+}
+
+#link-container a {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #0a0;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#link-container a:hover {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: #00ff00;
 }
