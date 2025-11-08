@@ -111,7 +111,7 @@ function drawStaticBackground() {
 
   // your name
   const name = "Mateusz Mojsak"
-  const targetWidth = width * 0.7
+  const targetWidth = width * 0.6
   const fontSize = getFontSizeForWidth(ctx, name, targetWidth, 'Ovo');
   ctx.save();
   ctx.textAlign = "center";
