@@ -132,8 +132,8 @@ canvas.addEventListener("mousemove", (e) => {
 
   coordLabel.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
   // offset label a bit so it doesn't sit on top of the cursor
-  coordLabel.style.left = `${x + 12}px`;
-  coordLabel.style.top  = `${y - 18}px`;
+  coordLabel.style.left = `${x - 4}px`;
+  coordLabel.style.top  = `${y + 26}px`;
 });
 
 // Handle touch input
