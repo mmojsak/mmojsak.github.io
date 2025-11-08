@@ -141,9 +141,14 @@ canvas.addEventListener("touchstart", handleTouch, { passive: true });
 canvas.addEventListener("touchmove", handleTouch, { passive: true });
 
 function handleTouch(e) {
+//   e.preventDefault(); // optional: prevent scrolling
   const rect = canvas.getBoundingClientRect();
   const touch = e.touches[0];
   const x = touch.clientX - rect.left;
   const y = touch.clientY - rect.top;
   drawCrosshair(x, y);
+
+  coordLabel.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
+  coordLabel.style.left = `${x + 12}px`;
+  coordLabel.style.top = `${y - 18}px`;
 }
