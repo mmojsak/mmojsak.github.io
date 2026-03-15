@@ -1,182 +1,128 @@
-const bgCanvas = document.getElementById("bg-canvas");
-const bgCtx = bgCanvas.getContext("2d");
+const container = document.getElementById("blocks-container");
 
-const canvas = document.getElementById("interactive-canvas");
-const ctx = canvas.getContext("2d");
+const blocks = [
+  { 
+    title: "about me", 
+    link: "#", 
+    color: "#F92672", 
+    width: 500, 
+    height: 200, 
+    fontSize: 100, 
+    fontWeight: 'bold', 
+    fontFamily: 'Arial, sans-serif',
+    x: 300,  // Initial x position
+    y: 0     // Initial y position
+  }, 
+  { 
+    title: "publications", 
+    link: "#", 
+    color: "#AE81FF", 
+    width: 800, 
+    height: 200, 
+    fontSize: 100, 
+    fontWeight: 'bold', 
+    fontFamily: 'Arial, sans-serif',
+    x: 700, 
+    y: -500 
+  }, 
+  { 
+    title: "CV", 
+    link: "#", 
+    color: "#66D9EF", 
+    width: 300, 
+    height: 200, 
+    fontSize: 100, 
+    fontWeight: 'bold', 
+    fontFamily: 'Arial, sans-serif',
+    x: 1100, 
+    y: -1000 
+  }, 
+  { 
+    title: "projects", 
+    link: "#", 
+    color: "#A6E22E", 
+    width: 500, 
+    height: 200, 
+    fontSize: 100, 
+    fontWeight: 'bold', 
+    fontFamily: 'Arial, sans-serif',
+    x: 1500, 
+    y: -1500
+  }, 
+];
 
-const coordLabel = document.getElementById("coord-label");
-const container = document.getElementById("canvas-container");
+const gravity = 0.01;
+const friction = 0.5;
+const angularFriction = 0.5;
 
-const width = bgCanvas.clientWidth;   // CSS pixels
-const height = bgCanvas.clientHeight; // CSS pixels
-
-// grid settings
-const fineSpacing = 10;
-const coarseSpacing = 50;
-const coarseEvery = Math.round(coarseSpacing / fineSpacing);
-
-// resize both canvases
-function resizeCanvas() {
-  const dpr = window.devicePixelRatio || 1;
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-
-  [bgCanvas, canvas].forEach(c => {
-    c.style.width = width + "px";
-    c.style.height = height + "px";
-    c.width = Math.round(width * dpr);
-    c.height = Math.round(height * dpr);
-    c.getContext("2d").setTransform(dpr, 0, 0, dpr, 0, 0);
-  });
-    document.fonts.load("64px Ovo").then(() => {
-      drawStaticBackground(); // draw grid + name now
+class Block {
+  constructor(block) {
+    this.title = block.title;
+    this.link = block.link;
+    this.width = block.width;
+    this.height = block.height;
+    this.color = block.color;
+    this.fontSize = block.fontSize;
+    this.fontWeight = block.fontWeight;
+    this.fontFamily = block.fontFamily;
+    this.element = this.createElement();
+    this.body = Matter.Bodies.rectangle(block.x, block.y, this.width, this.height, {
+      restitution: 0.2,
+      friction: 0.1,
+      frictionAir: 0.05,
+      density: 0.005
     });
-//   drawStaticBackground(); // grid + name
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-function getFontSizeForWidth(ctx, text, targetWidth, fontFamily = 'Ovo') {
-  let fontSize = 10; // starting point
-  ctx.font = `${fontSize}px '${fontFamily}'`;
-
-  // increase font size until text width reaches target
-  while (ctx.measureText(text).width < targetWidth) {
-    fontSize += 1;
-    ctx.font = `${fontSize}px '${fontFamily}'`;
   }
 
-  // optionally, reduce by 1 to not exceed target width
-  return fontSize - 1;
-}
-
-// ---------------------
-// STATIC BACKGROUND
-// ---------------------
-function drawStaticBackground() {
-  const ctx = bgCtx;
-  ctx.clearRect(0, 0, width, height);
-
-  // fine grid
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = "rgba(124, 124, 124, 0.06)";
-  for (let x = 0; x <= width; x += fineSpacing) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, height);
-    ctx.stroke();
-  }
-  for (let y = 0; y <= height; y += fineSpacing) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(width, y);
-    ctx.stroke();
+  createElement() {
+    const div = document.createElement('div');
+    div.className = 'block';
+    div.textContent = this.title;
+    div.style.width = this.width + 'px';
+    div.style.height = this.height + 'px';
+    div.style.backgroundColor = this.color;
+    div.style.fontSize = this.fontSize + 'px';
+    div.style.fontWeight = this.fontWeight;
+    div.style.fontFamily = this.fontFamily;
+    div.addEventListener('click', () => {
+      if (this.link !== '#') {
+        window.open(this.link, '_blank');
+      }
+    });
+    container.appendChild(div);
+    return div;
   }
 
-  // coarse grid
-  ctx.lineWidth = 1.2;
-  ctx.strokeStyle = "rgba(110, 110, 110, 0.12)";
-  for (let i = 0; i <= Math.ceil(width / fineSpacing); i++) {
-    if (i % coarseEvery === 0) {
-      const x = i * fineSpacing;
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, height);
-      ctx.stroke();
-    }
+  update() {
+    this.element.style.left = (this.body.position.x - this.width / 2) + 'px';
+    this.element.style.top = (this.body.position.y - this.height / 2) + 'px';
+    this.element.style.transform = `rotate(${this.body.angle * 180 / Math.PI}deg)`;
   }
-  for (let j = 0; j <= Math.ceil(height / fineSpacing); j++) {
-    if (j % coarseEvery === 0) {
-      const y = j * fineSpacing;
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(width, y);
-      ctx.stroke();
-    }
-  }
-
-//   // central axes
-//   const cx = width / 2;
-//   const cy = height / 2;
-//   ctx.strokeStyle = "rgba(255, 0, 0, 1)";
-//   ctx.lineWidth = 1.5;
-//   ctx.beginPath();
-//   ctx.moveTo(cx, 0);
-//   ctx.lineTo(cx, bgCanvas.height);
-//   ctx.stroke();
-//   ctx.beginPath();
-//   ctx.moveTo(0, cy);
-//   ctx.lineTo(bgCanvas.width, cy);
-//   ctx.stroke();
-
-  // your name
-  const name = "Mateusz Mojsak"
-  const targetWidth = width * 0.6
-  const fontSize = getFontSizeForWidth(ctx, name, targetWidth, 'Ovo');
-  ctx.save();
-  ctx.textAlign = "center";
-  ctx.textBaseline = "top";
-  ctx.font = `${fontSize}px 'Ovo', serif`;
-  ctx.fillStyle = "rgba(0, 0, 0, 1)";
-  ctx.fillText(name, width / 2, 50);
-  ctx.restore();
 }
 
-// ---------------------
-// DYNAMIC CROSSHAIR
-// ---------------------
-function drawCrosshair(x, y) {
-  ctx.clearRect(0, 0, width, height);
+const blockObjects = blocks.map(b => new Block(b));
 
-  ctx.strokeStyle = "#0f0";
-  ctx.lineWidth = 1;
+// Create Matter.js engine
+const engine = Matter.Engine.create();
+const world = engine.world;
 
-  // vertical
-  ctx.beginPath();
-  ctx.moveTo(x, 0);
-  ctx.lineTo(x, height);
-  ctx.stroke();
-
-  // horizontal
-  ctx.beginPath();
-  ctx.moveTo(0, y);
-  ctx.lineTo(width, y);
-  ctx.stroke();
-
-  // central "+"
-  const size = 6;
-  ctx.beginPath();
-  ctx.moveTo(x - size, y);
-  ctx.lineTo(x + size, y);
-  ctx.moveTo(x, y - size);
-  ctx.lineTo(x, y + size);
-  ctx.strokeStyle = "rgba(0, 0, 0, 1)";
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-}
-
-// ---------------------
-// MOUSE & TOUCH
-// ---------------------
-function updateCursorPosition(x, y) {
-  drawCrosshair(x, y);
-
-  coordLabel.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
-  coordLabel.style.left = `${x}px`;
-  coordLabel.style.top = `${y}px`;
-}
-
-canvas.addEventListener("mousemove", (e) => {
-  const rect = canvas.getBoundingClientRect();
-  updateCursorPosition(e.clientX - rect.left, e.clientY - rect.top);
+// Add blocks to world
+blockObjects.forEach(block => {
+  Matter.World.add(world, block.body);
 });
 
-canvas.addEventListener("touchstart", handleTouch, { passive: true });
-canvas.addEventListener("touchmove", handleTouch, { passive: false });
+// Add boundaries
+const ground = Matter.Bodies.rectangle(window.innerWidth / 2, window.innerHeight + 50, window.innerWidth, 100, { isStatic: true });
+const leftWall = Matter.Bodies.rectangle(-50, window.innerHeight / 2, 100, window.innerHeight, { isStatic: true });
+const rightWall = Matter.Bodies.rectangle(window.innerWidth + 50, window.innerHeight / 2, 100, window.innerHeight, { isStatic: true });
 
-function handleTouch(e) {
-  e.preventDefault();
-  const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
-  updateCursorPosition(touch.clientX - rect.left, touch.clientY - rect.top);
-}
+Matter.World.add(world, [ground, leftWall, rightWall]);
+
+// Create runner
+const runner = Matter.Runner.create();
+Matter.Runner.run(runner, engine);
+
+// Update DOM
+Matter.Events.on(engine, 'afterUpdate', () => {
+  blockObjects.forEach(block => block.update());
+});

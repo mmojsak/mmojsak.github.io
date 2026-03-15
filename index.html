@@ -5,38 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mateusz Mojsak</title>
 
-    <!-- Load font -->
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Trocchi&display=swap" rel="stylesheet"> -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
  
-  <!-- Link to your CSS -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <header>
+    <h1>Mateusz Mojsak</h1>
+  </header>
 
-  <main id="canvas-container">
-    <!-- static background: grid + name -->
-    <canvas id="bg-canvas"></canvas>
-  
-    <!-- dynamic overlay: crosshair -->
-    <canvas id="interactive-canvas"></canvas>
-  
-    <!-- coordinate label -->
-    <div id="coord-label">(0, 0)</div>
-  
-    <!-- HTML overlay boxes (clickable links, etc.) -->
-    <div id="link-container">
-      <a href="https://www.linkedin.com/in/mateuszmojsak/" target="_blank">LinkedIn</a>
-      <a href="https://scholar.google.com/citations?user=OibTSU0AAAAJ&hl=en" target="_blank">Google Scholar</a>
-      <a href="https://orcid.org/0009-0004-4024-2271" target="_blank">ORCID</a>
-    </div>
+  <main id="blocks-container">
+    <!-- Blocks will be added here dynamically -->
   </main>
 
-  <!-- Link to your JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
