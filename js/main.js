@@ -13,12 +13,12 @@
 
   // Palette colours (RGB tuples for easy alpha blending)
   const COLORS = [
-    [76, 167, 48],    // #4ca730
     [255, 176, 0],    // #ffb000
     [254, 97, 0],     // #fe6100
     [220, 38, 127],   // #dc267f
     [120, 94, 240],   // #785ef0
     [100, 143, 255],  // #648fff
+    [76, 167, 48],    // #4ca730
   ];
 
   // Each curve is a "band" — a function of x with time-varying parameters
@@ -112,13 +112,14 @@
   // Draw a single band as a smooth curve
   function drawBand(band, t, px, py) {
     const color = COLORS[band.colorIdx % COLORS.length];
-    const alpha = 0.07 + 0.05 * Math.sin(t * 0.002 + band.offset * 2); // subtle breathing
+    // Higher alpha on white background to remain visible but still subtle
+    const alpha = 0.12 + 0.08 * Math.sin(t * 0.002 + band.offset * 2);
     ctx.strokeStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha})`;
-    ctx.lineWidth = 1.2;
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
 
     const steps = Math.max(W, 200);
-    const margin = 0.05; // leave 5% margin on each side
+    const margin = 0.05;
     const xMin = margin;
     const xMax = 1 - margin;
 
@@ -147,8 +148,8 @@
     const px = currentX * parallaxStrength * W;
     const py = currentY * parallaxStrength * H;
 
-    // Clear with slight trail for subtle motion blur
-    ctx.fillStyle = 'rgba(10, 10, 10, 0.3)';
+    // Clear to white (no trail — clean on white bg)
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, W, H);
 
     // Draw bands

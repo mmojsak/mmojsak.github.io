@@ -11,8 +11,8 @@
 
 html, body {
   height: 100%;
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #ffffff;
+  color: #1a1a1a;
   font-family: 'Ovo', serif;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -33,11 +33,29 @@ html, body {
 }
 
 /* ================================================
+   Crystal illustration (full-width, bottom)
+   ================================================ */
+.bg-crystal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  z-index: 1;
+  object-fit: contain;
+  object-position: bottom center;
+  /* Ensure it doesn't stretch taller than ~40% of viewport on large screens */
+  max-height: 40vh;
+}
+
+/* ================================================
    Hero Layout
    ================================================ */
 .hero {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,7 +76,7 @@ html, body {
   font-size: clamp(2rem, 6vw, 4.5rem);
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: #ffffff;
+  color: #1a1a1a;
   line-height: 1.15;
   margin-bottom: 0.5rem;
 }
@@ -78,7 +96,7 @@ html, body {
   display: block;
   width: clamp(40px, 10vw, 120px);
   height: 2px;
-  background: var(--divider-color, #ffffff);
+  background: var(--divider-color, #1a1a1a);
   border-radius: 1px;
 }
 
@@ -86,7 +104,7 @@ html, body {
   display: block;
   width: 10px;
   height: 10px;
-  background: var(--divider-color, #ffffff);
+  background: var(--divider-color, #1a1a1a);
   transform: rotate(45deg);
   border-radius: 2px;
   flex-shrink: 0;
@@ -97,7 +115,7 @@ html, body {
    ================================================ */
 .tagline {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(26, 26, 26, 0.55);
   letter-spacing: 0.08em;
   margin-bottom: 2.5rem;
 }
@@ -122,10 +140,10 @@ html, body {
   gap: 0.5rem;
   padding: 1.25rem 0.5rem;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   text-decoration: none;
-  color: #ffffff;
+  color: #1a1a1a;
   transition:
     background 0.25s ease,
     border-color 0.25s ease,
@@ -142,7 +160,7 @@ html, body {
   position: absolute;
   inset: 0;
   border-radius: 14px;
-  background: var(--card-color, #ffffff);
+  background: var(--card-color, #1a1a1a);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -152,9 +170,9 @@ html, body {
 }
 
 .nav-card:hover {
-  border-color: var(--card-color, #ffffff);
+  border-color: var(--card-color, #1a1a1a);
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 .nav-card:active {
@@ -164,7 +182,7 @@ html, body {
 .nav-icon {
   width: clamp(28px, 5vw, 36px);
   height: clamp(28px, 5vw, 36px);
-  color: var(--card-color, #ffffff);
+  color: var(--card-color, #1a1a1a);
   position: relative;
   z-index: 1;
 }
@@ -194,5 +212,10 @@ html, body {
 
   .hero {
     padding: 1rem;
+  }
+
+  /* On small screens let the crystal take a bit more height */
+  .bg-crystal {
+    max-height: 30vh;
   }
 }
