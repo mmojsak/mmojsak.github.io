@@ -13,10 +13,84 @@ html, body {
   height: 100%;
   background: #ffffff;
   color: #1a1a1a;
-  font-family: "Yuyu", sans-serif;
-  overflow: hidden;
+  font-family: Calibri, "Segoe UI", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sub-page layout */
+body.sub-page {
+  overflow: hidden;
+}
+
+body.sub-page .page-content {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 2;
+  padding: 9rem 1.5rem 2rem;
+  scroll-behavior: smooth;
+}
+
+/* ================================================
+   Fixed Header for Sub-Pages
+   ================================================ */
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.5rem;
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 70%, transparent 100%);
+  pointer-events: none;
+}
+
+.page-header-inner {
+  max-width: 38em;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.page-header .name {
+  font-family: "Yuyu", sans-serif;
+  font-size: 3em;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  line-height: 1.15;
+  margin-bottom: 0;
+}
+
+.page-header .divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin-bottom: 0;
+}
+
+.page-header .divider-line {
+  display: block;
+  width: 18em;
+  height: 0.125em;
+  background: var(--divider-color, #1a1a1a);
+  border-radius: 1px;
+}
+
+.page-header .nav-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3em 1.5em;
+  width: 100%;
+  max-width: 38em;
+  margin: 0 auto;
 }
 
 /* ================================================
@@ -52,14 +126,27 @@ html, body {
 /* ================================================
    Hero Layout
    ================================================ */
+/* ================================================
+   Hero Layout (Homepage - centered)
+   ================================================ */
 .hero {
   position: relative;
   z-index: 2;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   padding: 5vh 1.5rem;
+  overflow: hidden; /* Prevent content from extending outside */
+}
+
+/* Sub-page hero wrapper - keep visible for content */
+.sub-page .hero {
+  display: flex;
+  align-items: flex-start;
+  min-height: auto;
+  padding: 0;
 }
 
 /*
@@ -71,15 +158,29 @@ html, body {
   text-align: center;
   width: 100%;
   max-width: 38em;            /* caps width proportional to font size */
-  font-size: clamp(13px, 2.0vw, 22px);
-  margin-top: -20.00vh;
+  font-size: 16px;
+  margin-top: 0;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+
+/* Sub-page hero content adjustments */
+.sub-page .hero-content {
+  margin-top: 0;
+  padding-top: 1rem;
+}
+
+/* Graph canvas - explicit size set by JS, just center it */
+#graph-canvas {
+  display: block;
 }
 
 /* ================================================
    Name (Title)
    ================================================ */
 .name {
-  font-size: 2.4em;
+  font-family: "Yuyu", sans-serif;
+  font-size: 3em;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: #1a1a1a;
@@ -100,7 +201,7 @@ html, body {
 
 .divider-line {
   display: block;
-  width: 14em;
+  width: 18em;
   height: 0.125em;
   background: var(--divider-color, #1a1a1a);
   border-radius: 1px;
@@ -120,16 +221,73 @@ html, body {
    Tagline
    ================================================ */
 .tagline {
-  font-size: 0.8em;
+  font-family: "Yuyu", sans-serif;
+  font-size: 1.5em;
   color: var(--tagline-color, #1a1a1a);
   letter-spacing: 0.08em;
   margin-bottom: 1.5em;
 }
 
 /* ================================================
-   Navigation Grid
+   Content Sections
    ================================================ */
-.nav-grid {
+.content-section {
+  width: 100%;
+  max-width: 38em;
+  margin: 0 auto 1.5em;
+  text-align: center;
+}
+
+/* ================================================
+   Projects List
+   ================================================ */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  text-align: left;
+}
+
+.project-card {
+  background: rgba(0, 0, 0, 0.02);
+  border: 0.15em solid var(--card-color, #1a1a1a);
+  padding: 1.2em;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-card:hover {
+  background: rgba(0, 0, 0, 0.03);
+  box-shadow: 0 0.2em 0.8em rgba(0, 0, 0, 0.06);
+}
+
+.project-title {
+  font-size: 1.3em;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #1a1a1a;
+  margin-bottom: 0.3em;
+  line-height: 1.2;
+}
+
+.project-meta {
+  font-size: 0.75em;
+  color: #666;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6em;
+  font-style: italic;
+}
+
+.project-description {
+  font-size: 0.85em;
+  color: #1a1a1a;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ================================================
+   Navigation Grid (Homepage)
+   ================================================ */
+.hero .nav-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5em;
@@ -138,7 +296,7 @@ html, body {
   margin: 0 auto;
 }
 
-.nav-card {
+.hero .nav-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -206,15 +364,106 @@ html, body {
 }
 
 /* ================================================
+   Highlight Text
+   ================================================ */
+.highlight {
+  color: #4ca730;
+  font-weight: 600;
+}
+
+/* ================================================
+   Publications List
+   ================================================ */
+.publication-list {
+  text-align: left;
+  padding-left: 1.5em;
+}
+
+.publication-list li {
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+.publication-list a {
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid #1a1a1a;
+  transition: opacity 0.25s ease;
+}
+
+.publication-list a:hover {
+  opacity: 0.7;
+}
+
+/* ================================================
+   Text Navigation for Header
+   ================================================ */
+.page-header .nav-link {
+  font-family: "Yuyu", sans-serif;
+  font-size: 1.5em;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 0.2em 0;
+  position: relative;
+  transition: color 0.25s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.page-header .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.08em;
+  background: var(--card-color, #1a1a1a);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.page-header .nav-link:hover::after,
+.page-header .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.page-header .nav-link:hover,
+.page-header .nav-link.active {
+  color: var(--card-color, #1a1a1a);
+}
+
+/* ================================================
    Responsive: Small Screens
    ================================================ */
 @media (max-width: 500px) {
   .hero-content {
-    font-size: clamp(12px, 3.5vw, 16px);
-    margin-top: -16.66vh;
+    font-size: 14px;
+    margin-top: 0;
   }
 
-  .nav-grid {
+  .projects-list {
+    gap: 1em;
+  }
+
+  .project-card {
+    padding: 1em;
+  }
+
+  .project-title {
+    font-size: 1.15em;
+  }
+
+  .project-meta {
+    font-size: 0.7em;
+  }
+
+  .project-description {
+    font-size: 0.8em;
+  }
+
+  .hero .nav-grid {
     grid-template-columns: repeat(2, 1fr);
     max-width: 18em;
     gap: 0.4em;
@@ -225,5 +474,27 @@ html, body {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-bottom: 4vh;
+  }
+
+  /* Sub-page responsive */
+  .page-header .nav-grid {
+    gap: 0.5em 1em;
+  }
+
+  .page-header {
+    padding: 1rem;
+  }
+
+  .page-header .name {
+    font-family: "Yuyu", sans-serif;
+    font-size: 1.6em;
+  }
+
+  .page-header .divider-line {
+    width: 18em;
+  }
+
+  body.sub-page .page-content {
+    padding: 9rem 1rem 2rem;
   }
 }

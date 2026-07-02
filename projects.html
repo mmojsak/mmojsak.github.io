@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - Mateusz Mojsak</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Ovo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tenor+Sans&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Yuyu&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Canvas for animated dispersion-curve background -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- Crystal illustration at the bottom -->
+  <!-- <img src="img/crystal.png" alt="" aria-hidden="true" class="bg-crystal" /> -->
+
+  <main class="hero">
+    <div class="hero-content">
+
+      <div class="content-section">
+        <div class="projects-list">
+          <article class="project-card" style="--card-color: #648fff;"> 
+            <h3 class="project-title">Local vibrational mode analysis in solids</h3>
+            <p class="project-meta">University of Birmingham & Southern Methodist University • Adam A. L. Michalchuk & Elfi Kraka</p>
+            <p class="project-description">I developed a theoretical framework bringing chemically-intuitive insight into the phonon dynamics of crystals. This included the development of a Python package implementing these methods, LModeA-k. This package will be released open-source in the near future.</p>
+          </article>
+
+          <article class="project-card" style="--card-color: #dc267f;">
+            <h3 class="project-title">Time- and mode-resolved simulation of kinetic energy redistribution in solids</h3>
+            <p class="project-meta">University of Birmingham • Adam A. L. Michalchuk</p>
+            <p class="project-description">I developed methods to understand the shock-driven reactivity of solids by modelling the localisaton of kinetic energy in reactive distortions via anharmonic phonon scattering.</p>
+          </article>
+
+          <article class="project-card" style="--card-color: #4ca730;">
+            <h3 class="project-title">Rationalising ligand action in selective metal recovery through solid-state computational modelling</h3>
+            <p class="project-meta">University of Edinburgh • Carole A. Morrison & Jason B. Love</p>
+            <p class="project-description">I explored the thermodynamic drivers of selective precipitation of gold by a novel recyclable diamide by means of computational modelling of ligand-ion interactions using density functional theory and topological analysis.</p>
+          </article>
+
+          <article class="project-card" style="--card-color: #ffb000;">
+            <h3 class="project-title">High pressure synthesis and characterisation of novel cation-ordered perovskites</h3>
+            <p class="project-meta">Centre for Science at Extreme Conditions, University of Edinburgh • J. Paul Attfield</p>
+            <p class="project-description">As an undegraduate student funded by the RSC Undergraduate Research Bursary, I synthesised new double double perovskites of the RMnMnReO6 family (R = La, Nd, Sm, Pr and Eu) and characterised their structures and physical properties.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

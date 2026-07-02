@@ -1,4 +1,66 @@
 /**
+ * Reusable header generator for sub-pages.
+ * Creates fixed header with name and navigation.
+ */
+function initSubPageHeader() {
+  const header = document.createElement('header');
+  header.className = 'page-header';
+  
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  
+  const pages = [
+    { name: 'Home', url: 'index.html', color: '#ffb000' },
+    { name: 'About', url: 'about.html', color: '#648fff' },
+    { name: 'Publications', url: 'publications.html', color: '#4ca730' },
+    { name: 'CV', url: 'cv.html', color: '#dc267f' },
+    { name: 'Projects', url: 'projects.html', color: '#785ef0' }
+  ];
+  
+  const navLinks = pages.map(page => {
+    const isActive = currentPage === page.url;
+    const activeClass = isActive ? ' active' : '';
+    return `<a href="${page.url}" class="nav-link${activeClass}" style="--card-color: ${page.color};">${page.name}</a>`;
+  }).join('');
+  
+  header.innerHTML = `
+    <div class="page-header-inner">
+      <h1 class="name">Mateusz Mojsak</h1>
+      <div class="divider" role="presentation">
+        <span class="divider-line" style="--divider-color: ${getDividerColor(currentPage)};"></span>
+      </div>
+      <nav class="nav-grid" aria-label="Main navigation">
+        ${navLinks}
+      </nav>
+    </div>
+  `;
+  
+  document.body.insertBefore(header, document.body.firstChild);
+  
+  // Add sub-page class to body
+  document.body.classList.add('sub-page');
+  
+  // Wrap hero content in page-content div if not already wrapped
+  const hero = document.querySelector('.hero');
+  if (hero && !hero.parentElement.classList.contains('page-content')) {
+    const pageContent = document.createElement('div');
+    pageContent.className = 'page-content';
+    hero.parentNode.insertBefore(pageContent, hero);
+    pageContent.appendChild(hero);
+  }
+}
+
+function getDividerColor(page) {
+  const colors = {
+    'index.html': '#648fff',
+    'about.html': '#648fff',
+    'projects.html': '#785ef0',
+    'cv.html': '#dc267f',
+    'publications.html': '#4ca730'
+  };
+  return colors[page] || '#1a1a1a';
+}
+
+/**
  * Animated dispersion-curve / band-structure background.
  * Draws faint, slowly-evolving lines that resemble electronic
  * band structure or phonon dispersion relations.
@@ -161,3 +223,9 @@
 
   tick();
 })();
+
+// Initialize header for sub-pages (skip homepage)
+if (window.location.pathname.split('/').pop() !== 'index.html' && 
+    window.location.pathname.split('/').pop() !== '') {
+  initSubPageHeader();
+}
