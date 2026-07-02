@@ -202,9 +202,10 @@
     canvas.id = 'graph-canvas';
     canvas.setAttribute('aria-label', 'Navigation graph');
     canvas.style.cssText = `
-      position: relative;
-      display: block;
-      margin: -10rem auto 0;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, calc(-55% + 0px));
       pointer-events: none;
       z-index: 3;
     `;
@@ -213,13 +214,9 @@
     const navGrid = document.querySelector('.hero .nav-grid');
     if (!navGrid) return;
 
-    // Insert canvas after hero-content (as sibling) so it can be full-width centered
-    const heroContent = navGrid.closest('.hero-content');
-    if (heroContent) {
-      heroContent.parentNode.insertBefore(canvas, heroContent.nextSibling);
-    } else {
-      navGrid.parentNode.insertBefore(canvas, navGrid);
-    }
+    // Append canvas directly to body so it's viewport-centered
+    // (not constrained by any parent container with overflow: hidden)
+    document.body.appendChild(canvas);
     navGrid.style.display = 'none';
 
     ctx = canvas.getContext('2d');
@@ -312,9 +309,9 @@
   function resize() {
     const dpr = window.devicePixelRatio || 1;
 
-    // Set canvas size based on viewport - make it large enough for nodes
-    const maxWidth = window.innerWidth * 0.95;
-    const maxHeight = window.innerHeight * 0.55;
+    // Set canvas size based on viewport - allow larger since it can overflow
+    const maxWidth = window.innerWidth * 1.0;
+    const maxHeight = window.innerHeight * 0.65;
     const size = Math.max(600, Math.min(1000, maxWidth, maxHeight));
 
     canvas.width = size * dpr;

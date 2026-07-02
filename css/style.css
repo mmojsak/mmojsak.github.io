@@ -135,10 +135,9 @@ body.sub-page .page-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  padding: 5vh 1.5rem;
-  overflow: hidden; /* Prevent content from extending outside */
+  padding: 8vh 1.5rem 0;
+  justify-content: flex-start;
 }
 
 /* Sub-page hero wrapper - keep visible for content */
@@ -160,8 +159,8 @@ body.sub-page .page-content {
   max-width: 38em;            /* caps width proportional to font size */
   font-size: 16px;
   margin-top: 0;
-  padding-top: 5vh;
-  padding-bottom: 5vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
 }
 
 /* Sub-page hero content adjustments */
@@ -170,7 +169,7 @@ body.sub-page .page-content {
   padding-top: 1rem;
 }
 
-/* Graph canvas - explicit size set by JS, just center it */
+/* Graph canvas - fixed position, centered in viewport, size set by JS */
 #graph-canvas {
   display: block;
 }
@@ -473,7 +472,7 @@ body.sub-page .page-content {
     padding-top: 10vh;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 4vh;
+    padding-bottom: 0;
   }
 
   /* Sub-page responsive */
