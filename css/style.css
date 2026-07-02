@@ -143,7 +143,7 @@ body.sub-page .page-content {
 /* Sub-page hero wrapper - keep visible for content */
 .sub-page .hero {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   min-height: auto;
   padding: 0;
 }
@@ -243,14 +243,15 @@ body.sub-page .page-content {
 .projects-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5em;
-  text-align: left;
 }
 
 .project-card {
   background: rgba(0, 0, 0, 0.02);
   border: 0.15em solid var(--card-color, #1a1a1a);
   padding: 1.2em;
+  text-align: left;
   transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -376,11 +377,13 @@ body.sub-page .page-content {
 .publication-list {
   text-align: left;
   padding-left: 1.5em;
+  list-style-position: outside;
 }
 
 .publication-list li {
   margin-bottom: 1em;
   line-height: 1.6;
+  padding-left: 0.5em;
 }
 
 .publication-list a {
