@@ -205,7 +205,7 @@
       position: fixed;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, calc(-55% + 0px));
+      transform: translate(-50%, calc(-45% + 0px));
       pointer-events: none;
       z-index: 3;
     `;
