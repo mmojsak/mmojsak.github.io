@@ -47,6 +47,8 @@
   let currentX = 0;
   let currentY = 0;
   const parallaxStrength = 0.03; // fraction of viewport shifted
+  // How much beyond the viewport edges to draw (covers max parallax + breathing room)
+  const EXTEND = 0.15; // 15% beyond each edge
 
   // Sizing
   let W, H, dpr;
@@ -119,9 +121,8 @@
     ctx.beginPath();
 
     const steps = Math.max(W, 200);
-    const margin = 0.05;
-    const xMin = margin;
-    const xMax = 1 - margin;
+    const xMin = -EXTEND;
+    const xMax = 1 + EXTEND;
 
     for (let i = 0; i <= steps; i++) {
       const nx = xMin + (xMax - xMin) * (i / steps);
@@ -148,9 +149,8 @@
     const px = currentX * parallaxStrength * W;
     const py = currentY * parallaxStrength * H;
 
-    // Clear to white (no trail — clean on white bg)
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, W, H);
+    // Clear transparently so the crystal (z-index: -1) shows through
+    ctx.clearRect(0, 0, W, H);
 
     // Draw bands
     BANDS.forEach((band) => drawBand(band, time, px, py));
