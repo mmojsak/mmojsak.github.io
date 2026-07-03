@@ -10,27 +10,214 @@
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Ovo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tenor+Sans&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Yuyu&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* CV-specific styles */
+    .cv-section { text-align: left; margin-bottom: 1.8em; }
+    .cv-section-title { font-family: "Yuyu", sans-serif; font-size: 1.5em; letter-spacing: 0.04em; color: #0000c4; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.2em; margin-bottom: 0.8em; }
+    .cv-entry { margin-bottom: 1.2em; }
+    .cv-entry-header { font-size: 0.95em; line-height: 1.4; margin-bottom: 0.3em; }
+    .cv-entry-date { font-size: 0.65em; color: #666; letter-spacing: 0.02em; margin-bottom: 0.15em; }
+    .cv-entry-title { font-weight: 700; color: #1a1a1a; }
+    .cv-entry-subtitle { font-style: italic; font-weight: 400; }
+    .cv-entry-body { font-size: 0.85em; line-height: 1.55; color: #1a1a1a; margin-bottom: 0.3em; }
+    .cv-highlight { color: #0000c4; }
+    .cv-skills-list { list-style: none; padding-left: 0; margin: 0.3em 0 0 0; }
+    .cv-skills-list li { font-size: 0.82em; line-height: 1.55; padding-left: 1.2em; position: relative; margin-bottom: 0.1em; }
+    .cv-skills-list li::before { content: "▸"; position: absolute; left: 0; color: #0000c4; }
+    .cv-personal-info { text-align: center; font-size: 0.82em; line-height: 1.5; color: #555; margin-bottom: 1.5em; }
+    .cv-personal-info a { color: #0000c4; text-decoration: none; border-bottom: 1px solid rgba(0,0,196,0.3); }
+    .cv-personal-info a:hover { opacity: 0.7; }
+    .cv-references { font-size: 0.82em; line-height: 1.5; color: #555; }
+    .cv-references a { color: #0000c4; text-decoration: none; border-bottom: 1px solid rgba(0,0,196,0.3); }
+    .cv-references a:hover { opacity: 0.7; }
+    .cv-interests { font-size: 0.82em; line-height: 1.55; margin-bottom: 0.5em; }
+    .cv-publication-list { list-style: none; padding-left: 0; counter-reset: pub-counter; }
+    .cv-publication-list li { font-size: 0.82em; line-height: 1.55; margin-bottom: 0.6em; padding-left: 2em; position: relative; }
+    .cv-publication-list li::before { counter-increment: pub-counter; content: "[" counter(pub-counter) "]"; position: absolute; left: 0; color: #0000c4; }
+    .cv-publication-list a { color: #0000c4; text-decoration: none; border-bottom: 1px solid rgba(0,0,196,0.3); }
+    .cv-publication-list a:hover { opacity: 0.7; }
+    .cv-awards-list { list-style: none; padding-left: 0; margin: 0.3em 0 0 0; }
+    .cv-awards-list li { font-size: 0.82em; line-height: 1.55; padding-left: 1.2em; position: relative; margin-bottom: 0.1em; }
+    .cv-awards-list li::before { content: "▸"; position: absolute; left: 0; color: #0000c4; }
+    .cv-conference-list { list-style: none; padding-left: 0; margin: 0.3em 0 0 0; }
+    .cv-conference-list li { font-size: 0.82em; line-height: 1.55; padding-left: 1.2em; position: relative; margin-bottom: 0.1em; }
+    .cv-conference-list li::before { content: "▸"; position: absolute; left: 0; color: #0000c4; }
+
+    .cv-project-tags {
+      display: inline;
+      margin-left: 0.3em;
+    }
+
+    .cv-project-tag {
+      display: inline;
+      padding: 0.15em 0.5em;
+      border-radius: 0.5em;
+      background: var(--tag-color, #1a1a1a);
+      border: 0px solid var(--tag-color, #1a1a1a);
+      color: #ffffff;
+      font-size: 0.75em;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+      line-height: 1.8;
+      margin-right: 0.35em;
+      white-space: nowrap;
+    }
+
+    .cv-project-tag:hover {
+      background: var(--tag-color, #1a1a1a);
+      border: 2px solid #000000;
+      box-shadow: 0 0.15em 0.5em rgba(0,0,0,0.08);
+    }
+
+    .cv-project-tag-label {
+      font-size: 0.82em;
+      color: #555;
+      display: inline;
+    }
+  </style>
 </head>
 <body>
-  <!-- Canvas for animated dispersion-curve background -->
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-  <!-- Crystal illustration at the bottom -->
-  <!-- <img src="img/crystal.png" alt="" aria-hidden="true" class="bg-crystal" /> -->
-
   <main class="hero">
     <div class="hero-content">
-
       <div class="content-section">
-        <!-- Add your CV content here -->
-        <p>Coming soon...</p>
-        <p><br></p>
-        <p>In the meantime, check out my <a href="https://www.linkedin.com/in/mateuszmojsak/">LinkedIn</a> for more info.</p>
-        
+
+        <!-- SECTION: Education and Relevant Experience -->
+        <div class="cv-section">
+          <h2 class="cv-section-title">Education and Relevant Experience</h2>
+          <!-- PhD entry -->
+          <div class="cv-entry">
+            <div class="cv-entry-date">2023&ndash;present</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Doctor of Philosophy (Chemistry)</span>, <span class="cv-entry-subtitle">University of Birmingham</span></div>
+            <div class="cv-entry-body"><strong class="cv-highlight">Title:</strong> <em>Fundamental understanding of mechanochemical processes: a phonon-driven approach.</em><br><strong class="cv-highlight">Supervisor:</strong> Dr Adam A. L. Michalchuk</div>
+            <div class="cv-project-tag-label">See project details:</div>
+            <div class="cv-project-tags">
+              <a href="projects.html#project-lvma" class="cv-project-tag" style="--tag-color: #648fff;">Local modes in solids</a>
+              <a href="projects.html#project-kinetic" class="cv-project-tag" style="--tag-color: #dc267f;">Phonon scattering simulation</a>
+            </div>
+          </div>
+          <!-- MChem entry -->
+          <div class="cv-entry" style="margin-top:1.5em;">
+            <div class="cv-entry-date">2018&ndash;2023</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Master of Chemistry with Honours (1<sup>st</sup> class)</span>, <span class="cv-entry-subtitle">University of Edinburgh</span></div>
+            <div class="cv-entry-body"><strong class="cv-highlight">MChem Thesis Title:</strong> <em>Rationalising ligand action in selective metal recovery through solid-state computational modelling.</em><br><strong class="cv-highlight">Supervisors:</strong> Prof. Carole A. Morrison, Prof. Jason B. Love</div>
+            <div class="cv-project-tag-label">See project details:</div>
+            <div class="cv-project-tags">
+              <a href="projects.html#project-ligand" class="cv-project-tag" style="--tag-color: #4ca730;">Modelling metal recovery</a>
+            <div class="cv-project-tag-label"><br>Other projects:</div>
+            <div class="cv-project-tags">
+              <a href="projects.html#project-perovskite" class="cv-project-tag" style="--tag-color: #ffb000;">Double-double perovskites</a>
+            <div class="cv-project-tags">
+              <a href="projects.html#project-photocat" class="cv-project-tag" style="--tag-color: #fe6100;">Foam-supported photocatalysis</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION: Training and Conference Participation -->
+        <div class="cv-section" style="margin-top:1.5em;">
+          <h2 class="cv-section-title">Training and Conference Participation</h2>
+          <ul class="cv-conference-list">
+            <li><strong>2026</strong> &mdash; UK Materials Chemistry Consortium (MCC) Conference, <em>Daresbury Laboratory</em></li>
+            <li><strong>2026</strong> &mdash; 3<sup>rd</sup> International Explosives Conference (IEC), <em>Cardiff</em></li>
+            <li><strong>2026</strong> &mdash; UK Neutron and Muon Science and User Meeting, <em>University of Warwick</em></li>
+            <li><strong>2025</strong> &mdash; 11<sup>th</sup> International Conference on Mechanochemistry and Mechanical Alloying (INCOME), <em>Berlin</em></li>
+            <li><strong>2024</strong> &mdash; Faraday Community Poster Symposium, <em>Royal Society of Chemistry</em>, <em>London</em></li>
+            <li><strong>2024</strong> &mdash; PCG/CCG/ISIS Winter Crystallography Meeting, <em>Milton Hill House</em>, <em>Oxfordshire</em></li>
+            <li><strong>2024</strong> &mdash; Birmingham Symposium on Mechanochemistry and Sustainability, <em>University of Birmingham</em></li>
+            <li><strong>2024</strong> &mdash; ISIS Neutron Training Course, <em>Rutherford Appleton Laboratory</em>, <em>Oxfordshire</em></li>
+            <li><strong>2024</strong> &mdash; UK Neutron and Muon Science and User Meeting, <em>University of Warwick</em></li>
+            <li><strong>2023</strong> &mdash; Machine Learning for Atomistic Modelling Autumn School, <em>Daresbury Laboratory</em></li>
+            <li><strong>2023</strong> &mdash; Sustainability in Chemistry Symposium, <em>University of Birmingham</em></li>
+            <li><strong>2023</strong> &mdash; Virtual School on Many-Body Calculations using EPW and BerkeleyGW</li>
+          </ul>
+        </div>
+
+        <!-- SECTION: Prizes and Awards -->
+        <div class="cv-section">
+          <h2 class="cv-section-title">Prizes and Awards</h2>
+          <ul class="cv-awards-list">
+            <li>Best paper from the Theoretical Chemistry research section, <em>University of Birmingham</em> (2026)</li>
+            <li>Best talk prize &mdash; <em>University of Birmingham</em> Chemistry PGR Symposium (2026)</li>
+            <li>Best poster prize &mdash; <em>University of Birmingham</em> Chemistry PGR Symposium (2025)</li>
+            <li>Best poster and presentation prize &mdash; PCG/CCG/ISIS Winter Crystallography Meeting (2024)</li>
+            <li>Undergraduate Research Bursary &mdash; <em>Royal Society of Chemistry</em> (2022)</li>
+            <li>Edinburgh Award (work experience) &mdash; <em>University of Edinburgh</em> (2021)</li>
+          </ul>
+        </div>
+
+        <!-- SECTION: Publications -->
+        <div class="cv-section">
+          <h2 class="cv-section-title">Publications</h2>
+          <div class="cv-entry-body">See my publications on the <a href="publications.html" style="color:#0000c4; text-decoration:none; border-bottom:1px solid rgba(0,0,196,0.3);">publications page</a>.</div>
+        </div>
+
+        <!-- SECTION: Professional Experience -->
+        <div class="cv-section">
+          <h2 class="cv-section-title">Professional Experience</h2>
+          <div class="cv-entry">
+            <div class="cv-entry-date">2023&ndash;present</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Postgraduate Demonstrator</span>, <span class="cv-entry-subtitle">University of Birmingham</span></div>
+            <!-- <div class="cv-entry-body">As a demonstrator in the undergraduate teaching labs, I participate in the delivery of the University's teaching programme, supporting students in developing their practical chemistry skills and critical thinking.</div> -->
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">2019&ndash;present</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Private Tutor in Chemistry and related sciences</span>, <span class="cv-entry-subtitle">self-employed</span></div>
+            <!-- <div class="cv-entry-body">As a freelance tutor in <em>Chemistry</em>, <em>Physics</em> and <em>Mathematics</em>, I provided bespoke tutoring services to over 30 clients to date, leading students across different qualifications to achieving top grades and securing places in higher education.</div> -->
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">Summer 2022</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Data Visualisation & Analysis Intern</span>, <span class="cv-entry-subtitle">EDINA, Edinburgh</span></div>
+            <!-- <div class="cv-entry-body">I worked alongside software engineers developing <em>Noteable</em>, the education-focused online IDE for computational notebooks in Python. I created example computational notebooks to showcase the product, wrote user documentation for the incoming features, and created user tutorial videos.</div> -->
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">Summer 2019</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Ticket Services Assistant</span>, <span class="cv-entry-subtitle">The Hub, Edinburgh</span></div>
+            <!-- <div class="cv-entry-body">I worked as a sales team member in the vibrant box office of the <em>Edinburgh International Festival</em> and at the festival live venues, assisting customers in their queries and purchases.</div> -->
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">2018&ndash;2019</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Chemistry & Human Biology Tutor</span>, <span class="cv-entry-subtitle">Edinburgh Tutors</span></div>
+            <!-- <div class="cv-entry-body">As a private tutor at <em>Edinburgh Tutors</em>, I helped tutees in need to improve their performance at school and gain confidence in their abilities.</div> -->
+          </div>
+        </div>
+
+        <!-- SECTION: Voluntary Work -->
+        <div class="cv-section">
+          <h2 class="cv-section-title">Voluntary Work</h2>
+          <div class="cv-entry">
+            <div class="cv-entry-date">2023&ndash;2024</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Student Chair of the Materials Simulation and Modelling Discussion Group</span>, <span class="cv-entry-subtitle">University of Birmingham</span></div>
+            <!-- <div class="cv-entry-body">Co-chair and organiser of a special interest group of the <em>Birmingham Environment for Academic Research</em>, facilitating the exchange of ideas between computational and theoretical researchers at the University.</div> -->
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">2018&ndash;2023</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Head of the Chemistry section at the <em>Edinburgh Scientific Researchers Association</em></span>, <span class="cv-entry-subtitle">University of Edinburgh</span></div>
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">2018&ndash;2023</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Society treasurer and Events Organiser Edinburgh University Students' Association</span>, <span class="cv-entry-subtitle">University of Edinburgh</span></div>
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">2017&ndash;2020</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Technical support volunteer at <em>Ultra Śledź</em> Ultramarathon</span>, <span class="cv-entry-subtitle">Białystok, Poland</span></div>
+          </div>
+          <div class="cv-entry" style="margin-top:1em;">
+            <div class="cv-entry-date">Summer 2019</div>
+            <div class="cv-entry-header"><span class="cv-entry-title">Technical support volunteer at <em>Halfway</em> Festival at Podlasie Opera and Philharmonic</span>, <span class="cv-entry-subtitle">Białystok, Poland</span></div>
+          </div>
+        </div>
+
+        <!-- SECTION: Personal Interests, Languages, References -->
+        <div class="cv-interests"><strong class="cv-highlight">Personal Interests:</strong> board games, music making, hiking, photography, fantasy literature</div>
+        <div class="cv-interests"><strong class="cv-highlight">Languages:</strong> <strong>English</strong> (fluent), <strong>Polish</strong> (mother tongue), <strong>French</strong> (elementary)</div>
+
+        <div class="cv-references" style="margin-top: 2em; text-align: center;">
+          For a complete CV, please <a href="mailto:mateuszmojsak@gmail.com">send me an email</a> or <a href="https://www.linkedin.com/in/mateuszmojsak/" target="_blank" rel="noopener">contact me on LinkedIn</a>.
+        </div>
       </div>
     </div>
   </main>
-
   <script src="js/main.js"></script>
 </body>
 </html>
